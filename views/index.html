@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="getContacts">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
@@ -10,7 +10,7 @@
   <link href="/stylesheets/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="/stylesheets/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
-<body>
+<body >
   <nav class="light-blue lighten-1" role="navigation">
     <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">PRM</a>
       <ul class="right hide-on-med-and-down">
@@ -35,28 +35,38 @@
       </div>
 <!-- End Title Section -->
 
+<!-- <div ng-controller='mainController'>
+  <ul>
+    <li ng-repeat="contact in contacts">{{contact.firstname}}</li>
+  </ul>
+</div> -->
+
 <!-- Log Call Form -->
 
-<div class="row">
-      <h3 class='header'>Log a Call or Visit</h3>
+<div class="row" ng-controller='mainController'>
+      <p>Log a Call or Visit</p>
             
-    <select class="browser-default col s6">
-      <option value="" disabled selected>Choose your option</option>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
+    <select class="browser-default col s4">
+      <option value="" disabled selected>Choose contact</option>
+      <option ng-repeat="contact in contacts" value={{contact.id}}>{{contact.firstname}}</option>
     </select>
 </div> 
             
 
       
 <!-- End of Log Call Section -->
-
+    <div class="row">
       <div class="col s12 m4">
           <div class="icon-block">
-            <div id="container" style="width:100%; height:400px;"></div>
+            <div id="callBar" style="width:100%; height:400px;"></div>
           </div>
       </div>
+      <div class="col s12 m4">
+          <div class="icon-black">
+            <div id="callLine" style="width:100%; height:400px;"></div>
+          </div>
+      </div>
+    </div>
       <div class="row center">
         <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
       </div>
@@ -87,10 +97,6 @@
     </div>
       
     <br><br>
-
-    <div class="section">
-
-    </div>
   </div>
 
   <footer class="page-footer orange">
@@ -128,11 +134,14 @@
 
 
   <!--  Scripts-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.12/angular.min.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="/javascripts/materialize.js"></script>
   <script src="/javascripts/init.js"></script>
   <script src="/javascripts/highcharts.js"></script>
   <script src="/javascripts/myChart.js"></script>
+  <script src="/javascripts/app.js"></script>
+
 
 
   </body>
