@@ -41,20 +41,29 @@
   </ul>
 </div> -->
 
-<!-- Log Call Form -->
 
-<div class="row" ng-controller='mainController'>
-      <p>Log a Call or Visit</p>
-            
-    <select class="browser-default col s4">
+<!-- New call log form -->
+<div class="container">
+
+  <form>
+    <div class="form-group">
+      <select class="browser-default col s4" ng-controller='mainController'>
       <option value="" disabled selected>Choose contact</option>
       <option ng-repeat="contact in contacts" value={{contact.id}}>{{contact.firstname}}</option>
     </select>
-</div> 
-            
+      <input type="text" class="form-control input-lg" placeholder="Add a todo..." ng-model="formData.text">
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add Todo</button>
+  </form>
 
-      
-<!-- End of Log Call Section -->
+  <ul ng-repeat="todo in todoData">
+    <li><input type="checkbox" ng-click="deleteTodo(todo.id)">&nbsp;{{ todo.text }}</li>
+  </ul>
+
+</div>
+
+
+<!-- End of new log form -->
     <div class="row">
       <div class="col s12 m4">
           <div class="icon-block">
@@ -79,22 +88,41 @@
   <div class="container">
     <div class="section">
     <!-- New Contact Section  -->
-    <div class="row">
-      <h2 class='header'>Add New Contact</h2>
 
-      <form class="col s12">
-        <div class="row center">
-          <div class="input-field col s3">
-            <input id="first_name" type="text" class="validate">
-            <label for="first_name">First Name</label>
-          </div>
-          <div class="input-field col s3">
-            <input id="last_name" type="text" class="validate">
-            <label for="last_name">Last Name</label>
-          </div>
-        </div>
-      </form>
+
+    <!-- New call log form -->
+<div class="container">
+
+  <form>
+    <div class="form-group col s12">
+
+      <input id = 'firstname' type="text" class="form-control input-lg" ng-model="formData.firstname">
+      <label for="firstname">First Name</label>
+      
+      <input id = 'lastname' type="text" class="form-control input-lg"  ng-model="formData.lastname">
+      <label for="lastname">Last Name</label>  
+      
+      
+      <input id = 'phone' type="text" class="validate"  ng-model="formData.phone">
+      <label for="phone">Phone</label>  
+      
+      <input id = 'email' type="text" class="form-control input-lg"  ng-model="formData.email">
+      <label for="email">Email</label>  
+    
     </div>
+    <br>
+    <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add Todo</button>
+  </form>
+
+  <ul ng-repeat="todo in todoData">
+    <li><input type="checkbox" ng-click="deleteTodo(todo.id)">&nbsp;{{ todo.text }}</li>
+  </ul>
+
+</div>
+
+
+<!-- End of new log form -->
+
       
     <br><br>
   </div>
