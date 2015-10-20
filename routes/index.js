@@ -8,12 +8,8 @@ router.get('/', function(req, res, next) {
 
 
 
-// start
+// Get Contacts Endpoint
 router.get('/contacts', function(req, res){
-
-
-
-
 
 var pg = require('pg');
 var conString = "postgres://bash@localhost/bash";
@@ -38,12 +34,9 @@ pg.connect(conString, function(err, client, done) {
 
 
 });
+// end of Get Contacts endpoint
 
-
-
-
-
-// end
+// POST - Create New Contact
 
 
 
