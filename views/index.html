@@ -43,23 +43,19 @@
 
 
 <!-- New call log form -->
-<div class="container">
+<div class="container" ng-controller='mainController'>
 
   <form>
     <div class="form-group">
-      <select class="browser-default col s4" ng-controller='mainController'>
+      <select class="browser-default col s4" ng-model="formData.callId">
       <option value="" disabled selected>Choose contact</option>
       <option ng-repeat="contact in contacts" value={{contact.id}}>{{contact.firstname}}</option>
     </select>
-      <input type="text" class="form-control input-lg" placeholder="Add a todo..." ng-model="formData.text">
+      <input type="date" claass="form-control input-lg" ng-model="formData.callDate">
+      <input type="text" class="form-control input-lg" placeholder="Call notes" ng-model="formData.callNotes">
     </div>
-    <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add Todo</button>
+    <button type="submit" class="btn btn-primary btn-lg" ng-click="addCall()">Add Todo</button>
   </form>
-
-  <ul ng-repeat="todo in todoData">
-    <li><input type="checkbox" ng-click="deleteTodo(todo.id)">&nbsp;{{ todo.text }}</li>
-  </ul>
-
 </div>
 
 
@@ -91,7 +87,7 @@
 
 
     <!-- New call log form -->
-<div class="container">
+<div class="container" ng-controller='mainController'>
 
   <form>
     <div class="form-group col s12">
@@ -111,12 +107,10 @@
     
     </div>
     <br>
-    <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add Todo</button>
+    <button type="submit" class="btn btn-primary btn-lg" ng-click="addContact()">Add Contact</button>
   </form>
 
-  <ul ng-repeat="todo in todoData">
-    <li><input type="checkbox" ng-click="deleteTodo(todo.id)">&nbsp;{{ todo.text }}</li>
-  </ul>
+
 
 </div>
 

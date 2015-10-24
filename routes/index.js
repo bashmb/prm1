@@ -37,19 +37,43 @@ pg.connect(conString, function(err, client, done) {
 });
 // end of Get Contacts endpoint
 
+// POST Calls endpoint
+router.post('/calls', function(req, res, next){
 
+  var data = {contactId: req.body.callId, date: req.body.callDate, notes: req.body.callNotes};
+ 
+  pg.connect(conString, function(err, client, done){
+    var results = [];
+    if(err){
+      done();
+      console.log(err);
+      return res.status(500).json({ success: false, data: err});
+    }
+    client.query("INSERT INTO calls(contact, date, notes, type) values ($1, $2, $3, $4)", [data.contactId, data.callDate, data.callNotes, 1]);
+    var query = client.query("SELECT * FROM calls")
+            // Stream results back one row at a time
+          query.on('row', function(row) {
+              results.push(row);
+          });
+
+          // After all data is returned, close connection and return results
+          query.on('end', function() {
+              done();
+              return res.json(results);
+          });
+  });
+});
 
 // POST - Create New Contact
-router.post('/contacts', function(req, res) {
-
-    var results = [];
-
+router.post('/contacts', function(req, res, next) {
     // Grab data from http request
-    var data = {firstname: 'hi', lastname:'bye', phone: 123, email:'hi@bye.com'};
+    // var data = {firstname: 'hi', lastname:'bye', phone: 123, email:'hi@bye.com'};
+    var data = {firstname: req.body.firstname, lastname: req.body.lastname, phone: req.body.phone, email: req.body.email};
     // var data = {text: req.body.text, complete: false};
 
     // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {
+        var results = [];
         // Handle connection errors
         if(err) {
           done();
