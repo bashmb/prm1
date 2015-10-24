@@ -8,6 +8,33 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+// Get all calls
+
+router.get('/calls', function(req, res, next){
+
+  var results = [];
+  pg.connect(conString, function(err, client, done) {
+
+    if (err) {
+      return console.error('error fetching client from pool', err);
+    }
+    var query = client.query('SELECT * FROM calls');
+     // Stream results back one row at a time
+          query.on('row', function(row) {
+              results.push(row);
+          });
+
+          // After all data is returned, close connection and return results
+          query.on('end', function() {
+              done();
+              return res.json(results);
+          });
+    });
+})
+
+
+// Get Calls to Contact
+
 
 
 // Get Contacts Endpoint
@@ -41,10 +68,6 @@ pg.connect(conString, function(err, client, done) {
 router.post('/calls', function(req, res, next){
 
   var data = {contactId: req.body.callId, callDate: req.body.callDate, callNotes: req.body.callNotes};
-  // var date = req.body.callDate.split(" ");
-  // var dateString = req.body.callDate;
-  // data.callDate = dateString;
-
   pg.connect(conString, function(err, client, done){
     var results = [];
     if(err){

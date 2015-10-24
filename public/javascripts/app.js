@@ -30,6 +30,60 @@ angular.module('getContacts', [])
             })
     };
 
+// Get All Calls
+    $scope.getAllCalls = function(req){
+    $http.get('/calls')
+        .success(function(data) {
+            $scope.calls = data;
+            console.log(data);
+            return data
+        })
+        .error(function(error) {
+            console.log('Error: ' + error);
+        });
+    }
+
+
+// Get Calls to a Contact
+    $scope.getCallsToContact = function(req){
+    $http.get('/calls')
+        .success(function(data) {
+            $scope.calls = data;
+            var results = [];
+            for (var i in data){
+                if(data[i].contact === req){
+                    results.push(data[i]);
+                }
+            }
+            console.log(results)
+            return results
+        })
+        .error(function(error) {
+            console.log('Error: ' + error);
+        });
+    }
+
+// Get Call Count to Contact
+
+    $scope.getCallCountToContact = function(req){
+    $http.get('/calls')
+        .success(function(data) {
+            $scope.calls = data;
+            var results = [];
+            for (var i in data){
+                if(data[i].contact === req){
+                    results.push(data[i]);
+                }
+            }
+            console.log(results.length)
+            return results.length
+        })
+        .error(function(error) {
+            console.log('Error: ' + error);
+        });
+    }
+
+
 // Create a new contact
 
     $scope.addContact = function(req){
