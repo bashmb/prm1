@@ -1,3 +1,7 @@
+console.log("You makin a chart!")
+var contacts = getContactNames();
+console.log(contacts);
+
 $(function () { 
     $('#callBar').highcharts({
         chart: {

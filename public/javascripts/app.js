@@ -5,7 +5,7 @@ angular.module('getContacts', [])
     $scope.formData = {};
     $scope.contacts = {};
 
-    // Get all contacts
+// Get all contact Data
     $http.get('/contacts')
         .success(function(data) {
             $scope.contacts = data;
@@ -14,6 +14,23 @@ angular.module('getContacts', [])
         .error(function(error) {
             console.log('Error: ' + error);
         });
+// Get contact names
+$scope.getContactNames = function(){
+    $http.get('/contacts')
+        .success(function(data) {
+            var results = []
+            $scope.contacts = data;
+            for (var i in data){
+                results.push(data[i].firstname);
+            }
+            console.log(results);
+            return results
+        })
+        .error(function(error){
+            console.log('Error: ' + error);
+        });
+}
+
 
 // Log a call
     $scope.addCall = function(req){
