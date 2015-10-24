@@ -40,8 +40,11 @@ pg.connect(conString, function(err, client, done) {
 // POST Calls endpoint
 router.post('/calls', function(req, res, next){
 
-  var data = {contactId: req.body.callId, date: req.body.callDate, notes: req.body.callNotes};
- 
+  var data = {contactId: req.body.callId, callNotes: req.body.callNotes};
+  var date = req.body.callDate.split(" ");
+  var dateString = date[1] + "-" + date[2] + "-" + date[3];
+  data.date = dateString;
+
   pg.connect(conString, function(err, client, done){
     var results = [];
     if(err){
