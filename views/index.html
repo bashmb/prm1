@@ -35,13 +35,6 @@
       </div>
 <!-- End Title Section -->
 
-<!-- <div ng-controller='mainController'>
-  <ul>
-    <li ng-repeat="contact in contacts">{{contact.firstname}}</li>
-  </ul>
-</div> -->
-
-
 <!-- New call log form -->
 <div class="container" ng-controller='mainController'>
 
@@ -60,16 +53,20 @@
 </div>
 
 
+
+
 <!-- End of new log form -->
-    <div class="row">
+    <div class="row" ng-controller='viewFunctions'>
       <div class="col s12 m4">
           <div class="icon-block">
-            <div id="callBar" style="width:100%; height:400px;"></div>
+            <div ng-repeat='name in contactNames'>{{name.id}} - {{name.firstname}} - {{name.count}}</div>
+            <!-- <div id="callBar" style="width:100%; height:400px;"></div> -->
+            
           </div>
       </div>
       <div class="col s12 m4">
           <div class="icon-black">
-            <div id="callLine" style="width:100%; height:400px;"></div>
+            <!-- <div id="callLine" style="width:100%; height:400px;"></div> -->
           </div>
       </div>
     </div>
@@ -80,7 +77,6 @@
 
     </div>
   </div>
-
 
   <div class="container">
     <div class="section">
@@ -157,15 +153,16 @@
 
 
   <!--  Scripts-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.12/angular.min.js"></script>
+    <!-- angular -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.min.js"></script>
+
+    <!-- Materialize.js Required Files-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="/javascripts/materialize.js"></script>
   <script src="/javascripts/init.js"></script>
-  <script src="/javascripts/highcharts.js"></script>
-  <script src="/javascripts/myChart.js"></script>
+
+    <!-- App -->
   <script src="/javascripts/app.js"></script>
-
-
 
   </body>
 </html>
