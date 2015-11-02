@@ -57,34 +57,34 @@ angular.module('getContacts', [])
                 yData.push(parseInt(data[i].count))
             }
 
-$(function () { 
-    $('#callBar').highcharts({
-        chart: {
-            type: 'bar'
-        },
-        title: {
-            text: 'Recent Calls'
-        },
-        xAxis: {
-            categories: xData
-        },
-        yAxis: {
-            title: {
-                text: ''
+    $(function () { 
+        $('#callBar').highcharts({
+            chart: {
+                type: 'bar'
             },
-            tickInterval: 1
-        },
-        series: [
-        // {
-        //     name: 'Visits',
-        //     data: [1, 2, 3, 2, 2]
-        // }, 
-        {
-            name: 'Calls',
-            data: yData
-        }]
+            title: {
+                text: 'Recent Calls'
+            },
+            xAxis: {
+                categories: xData
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                },
+                tickInterval: 1
+            },
+            series: [
+            // {
+            //     name: 'Visits',
+            //     data: [1, 2, 3, 2, 2]
+            // }, 
+            {
+                name: 'Calls',
+                data: yData
+            }]
+        });
     });
-});
 
 
 
