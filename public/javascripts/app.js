@@ -47,7 +47,6 @@ angular.module('getContacts', [])
 
 
 .controller('callsBar', function($scope, $http){
-    $scope.barData = []
     $http.get('/count/calls')
         .success(function(data) {
             var xData = []
@@ -86,12 +85,6 @@ angular.module('getContacts', [])
         });
     });
 
-
-
-
-
-
-
             $scope.barData = data;
             console.log(data);
         })
@@ -101,4 +94,71 @@ angular.module('getContacts', [])
     })
 
 
+// call count by date
+.controller('dateLine', function($scope, $http){
+    $http.get('/count/date')
+        .success(function(data) {
+        var chartData = []
+        console.log(data)
+        for (i = 0; i < data.length; i ++){
+            var date = data[i].date.split("T")
+            var dateSplit = date[0].split('-')
+            console.log(dateSplit)
+            // chartData.push(["Date.UTC(" + dateSplit[0] + "," + dateSplit[1] + "," + dateSplit[2] + ")", parseInt(data[i].count)]);
+            chartData.push([Date.UTC(dateSplit[0], dateSplit[1]-1, dateSplit[2]), parseInt(data[i].count)])
+        }
+        console.log("chartData:")
+        console.log(chartData)
+
+$(function () {
+    $('#dateLineChart').highcharts({
+        chart: {
+            type: 'spline'
+        },
+        title: {
+            text: 'Calls'
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                day: '%e %b %y'
+            },
+            
+            title: {
+                text: 'Date'
+            }
+        },
+        yAxis: {    
+            title: {
+                text: 'Calls'
+            },
+            min: 0
+        },
+
+        plotOptions: {
+            spline: {
+                marker: {
+                    enabled: true
+                }
+            }
+        },
+
+        series: [{
+            name: 'Total Calls',
+            data: chartData
+                 }]
+    });
+});
+
+
+
+    
+        })
+        .error(function(error) {
+            console.log('Error: ' + error);
+        });
+    })
 
