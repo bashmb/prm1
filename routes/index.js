@@ -111,14 +111,14 @@ pg.connect(conString, function(err, client, done) {
 
 
 
-// GET Call Count
+// GET Call Count by Contact
 router.get('/count/calls', function(req, res, next){
 var results = [];
 pg.connect(conString, function(err, client, done) {
   if (err) {
     return console.error('error fetching client from pool', err);
   }
-  var query = client.query('SELECT count(*) FROM calls');
+  var query = client.query('select contacts.firstname, count(calls.contact)from contacts join calls on contacts.id = calls.contact group by contacts.firstname;');
    // Stream results back one row at a time
         query.on('row', function(row) {
             results.push(row);

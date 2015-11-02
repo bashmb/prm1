@@ -46,71 +46,59 @@ angular.module('getContacts', [])
 // ***********************------------------------------
 
 
-.controller('viewFunctions', function($scope, $http){
-   // Get Call Count to Contact
-
-    $scope.contactNames = [];
-
-// Get contact names and call counts
-    $http.get('/contacts')
+.controller('callsBar', function($scope, $http){
+    $scope.barData = []
+    $http.get('/count/calls')
         .success(function(data) {
-            var results = []
-            $scope.contacts = data;
-            for (var i in data){
-                    results.push({id: data[i].id, firstname: data[i].firstname, count: 17});    
-                }
-            $scope.contactNames = results
-            })
-        .error(function(error){
-            console.log('Error: ' + error);
-        });
-
-// Get All Calls
-    $scope.getAllCalls = function(req){
-    $http.get('/calls')
-        .success(function(data) {
-            $scope.calls = data;
-            // console.log(data);
-            return data
-        })
-        .error(function(error) {
-            console.log('Error: ' + error);
-        });
-    }
-
-
-// Get Calls to a Contact
-    $scope.getCallsToContact = function(req){
-    $http.get('/calls')
-        .success(function(data) {
-            $scope.calls = data;
-            var results = [];
-            for (var i in data){
-                if(data[i].contact === req){
-                    results.push(data[i]);
-                }
+            var xData = []
+            var yData = []
+            for(i = 0; i < data.length; i++){
+                xData.push(data[i].firstname)
+                yData.push(parseInt(data[i].count))
             }
-            // console.log(results)
-            return results
+
+$(function () { 
+    $('#callBar').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Recent Calls'
+        },
+        xAxis: {
+            categories: xData
+        },
+        yAxis: {
+            title: {
+                text: ''
+            },
+            tickInterval: 1
+        },
+        series: [
+        // {
+        //     name: 'Visits',
+        //     data: [1, 2, 3, 2, 2]
+        // }, 
+        {
+            name: 'Calls',
+            data: yData
+        }]
+    });
+});
+
+
+
+
+
+
+
+            $scope.barData = data;
+            console.log(data);
         })
         .error(function(error) {
             console.log('Error: ' + error);
         });
-    }
+    })
 
-    $scope.getCallCountToContact = function(req){
-        $http.get('/calls')
-            .success(function(data) {
-                var count = 0;
-                for (var i in data){
-                    if(data[i].contact === req){
-                        count += 1
-                    }
-                }
-                return count
-            })
-            .error(function(error) {
-                console.log('Error: ' + error);
-            });
-    }
-});
+
+
