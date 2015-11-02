@@ -10,6 +10,7 @@ var conString = "postgres://bash@localhost/bash";
 //   * GET  /count/calls/:contact
 //   * GET  /contacts
 //   * GET  /count/contacts
+//   * GET  /count/date
 //   * GET  /callcount
 //   * POST /calls
 //   * POST /contacts
@@ -131,6 +132,30 @@ pg.connect(conString, function(err, client, done) {
         });
     });
 });
+
+// GET Call Count by Date
+router.get('/count/date', function(req, res, next){
+var results = [];
+pg.connect(conString, function(err, client, done) {
+  if (err) {
+    return console.error('error fetching client from pool', err);
+  }
+  var query = client.query('SELECT date, count(*) FROM calls GROUP BY date ORDER BY date;');
+   // Stream results back one row at a time
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(results);
+        });
+    });
+});
+
+
+
 
 // GET Call Count to Contact
 router.get('/count/calls/:contact', function(req, res, next){
