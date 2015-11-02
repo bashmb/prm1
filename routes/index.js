@@ -3,20 +3,72 @@ var router = express.Router();
 var pg = require('pg');
 var conString = "postgres://bash@localhost/bash";
 
+// Routes:
+//   * GET  /
+//   * GET  /calls
+//   * GET  /count/calls/
+//   * GET  /count/calls/:contact
+//   * GET  /contacts
+//   * GET  /count/contacts
+//   * GET  /callcount
+//   * POST /calls
+//   * POST /contacts
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+// Get all calls
+router.get('/calls/:contact', function(req, res, next){
 
+  var results = [];
+  pg.connect(conString, function(err, client, done) {
+
+    if (err) {
+      return console.error('error fetching client from pool', err);
+    }
+    var query = client.query('SELECT * FROM calls where contact = $1', [req.params.contact]);
+     // Stream results back one row at a time
+          query.on('row', function(row) {
+              results.push(row);
+          });
+
+          // After all data is returned, close connection and return results
+          query.on('end', function() {
+              done();
+              return res.json(results);
+          });
+    });
+})
+
+// Get all calls to contact
+router.get('/calls', function(req, res, next){
+
+  var results = [];
+  pg.connect(conString, function(err, client, done) {
+
+    if (err) {
+      return console.error('error fetching client from pool', err);
+    }
+    var query = client.query('SELECT * FROM calls');
+     // Stream results back one row at a time
+          query.on('row', function(row) {
+              results.push(row);
+          });
+
+          // After all data is returned, close connection and return results
+          query.on('end', function() {
+              done();
+              return res.json(results);
+          });
+    });
+})
 
 // Get Contacts Endpoint
 router.get('/contacts', function(req, res, next){
-
-
 var results = [];
 pg.connect(conString, function(err, client, done) {
-
   if (err) {
     return console.error('error fetching client from pool', err);
   }
@@ -31,20 +83,81 @@ pg.connect(conString, function(err, client, done) {
             done();
             return res.json(results);
         });
-  });
-
-
+    });
 });
 // end of Get Contacts endpoint
+
+// Get Count of Contacts Endpoint
+router.get('/count/contacts', function(req, res, next){
+var results = [];
+pg.connect(conString, function(err, client, done) {
+  if (err) {
+    return console.error('error fetching client from pool', err);
+  }
+  var query = client.query('SELECT count(*) FROM contacts');
+   // Stream results back one row at a time
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(results);
+        });
+    });
+});
+// end of Get Contacts endpoint
+
+
+
+// GET Call Count by Contact
+router.get('/count/calls', function(req, res, next){
+var results = [];
+pg.connect(conString, function(err, client, done) {
+  if (err) {
+    return console.error('error fetching client from pool', err);
+  }
+  var query = client.query('select contacts.firstname, count(calls.contact)from contacts join calls on contacts.id = calls.contact group by contacts.firstname;');
+   // Stream results back one row at a time
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(results);
+        });
+    });
+});
+
+// GET Call Count to Contact
+router.get('/count/calls/:contact', function(req, res, next){
+var results = [];
+pg.connect(conString, function(err, client, done) {
+  if (err) {
+    return console.error('error fetching client from pool', err);
+  }
+  var query = client.query('SELECT count(*) FROM calls WHERE contact = $1', [req.params.contact]);
+   // Stream results back one row at a time
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(results);
+        });
+    });
+});
+
 
 // POST Calls endpoint
 router.post('/calls', function(req, res, next){
 
   var data = {contactId: req.body.callId, callDate: req.body.callDate, callNotes: req.body.callNotes};
-  // var date = req.body.callDate.split(" ");
-  // var dateString = req.body.callDate;
-  // data.callDate = dateString;
-
   pg.connect(conString, function(err, client, done){
     var results = [];
     if(err){
@@ -67,7 +180,7 @@ router.post('/calls', function(req, res, next){
   });
 });
 
-// POST - Create New Contact
+// POST contacts:  Create New Contact
 router.post('/contacts', function(req, res, next) {
     // Grab data from http request
     // var data = {firstname: 'hi', lastname:'bye', phone: 123, email:'hi@bye.com'};

@@ -35,13 +35,6 @@
       </div>
 <!-- End Title Section -->
 
-<!-- <div ng-controller='mainController'>
-  <ul>
-    <li ng-repeat="contact in contacts">{{contact.firstname}}</li>
-  </ul>
-</div> -->
-
-
 <!-- New call log form -->
 <div class="container" ng-controller='mainController'>
 
@@ -54,36 +47,28 @@
       <input type="date" claass="form-control input-lg" ng-model="formData.callDate">
       <input type="text" class="form-control input-lg" placeholder="Call notes" ng-model="formData.callNotes">
     </div>
-    <button type="submit" class="btn btn-primary btn-lg" ng-click="addCall()">Add Todo</button>
+    <button type="submit" class="btn btn-primary btn-lg" ng-click="addCall()">Log Call</button>
   </form>
 </div>
 
-
 <!-- End of new log form -->
-    <div class="row">
-      <div class="col s12 m4">
-          <div class="icon-block">
-            <div id="callBar" style="width:100%; height:400px;"></div>
-          </div>
-      </div>
-      <div class="col s12 m4">
-          <div class="icon-black">
-            <div id="callLine" style="width:100%; height:400px;"></div>
-          </div>
-      </div>
-    </div>
-      <div class="row center">
-        <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
-      </div>
-      <br><br>
-
-    </div>
-  </div>
 
 
-  <div class="container">
-    <div class="section">
+
+
+<!-- Chart goes here -->
+
+  <div class="row"  ng-controller='callsBar'>
+    <div class='container'>
     <!-- New Contact Section  -->
+
+      <!-- <div ng-repeat='n in barData'>{{n.firstname}} - {{n.count}}</div> -->
+      <div id="callBar" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+    </div>
+  </div> 
+<!-- End of chart -->
+
 
 
     <!-- New call log form -->
@@ -156,15 +141,20 @@
 
 
   <!--  Scripts-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.12/angular.min.js"></script>
+    <!-- angular -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.min.js"></script>
+
+    <!-- Materialize.js Required Files-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="/javascripts/materialize.js"></script>
   <script src="/javascripts/init.js"></script>
-  <script src="/javascripts/highcharts.js"></script>
-  <script src="/javascripts/myChart.js"></script>
+
+    <!-- App -->
   <script src="/javascripts/app.js"></script>
 
-
+  <!-- charts -->
+  <script src="/javascripts/highcharts.js"></script>
+  <script src="/javascripts/myChart.js"></script>
 
   </body>
 </html>
