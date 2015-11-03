@@ -33,7 +33,7 @@ app.use('/about', about);
 // connect to postgresql
 
 var pg = require('pg');
-var conString = "postgres://bash@localhost/bash";
+var conString = "postgres://michael@localhost/michael";
 
 pg.connect(conString, function(err, client, done) {
 
