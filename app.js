@@ -6,8 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
-var about = require('./routes/about');
+// var users = require('./routes/users');
+// var about = require('./routes/about');
 // var contacts = require('./routes/contacts');
 
 var app = express();
@@ -26,14 +26,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
 app.use('/', routes);
-app.use('/users', users);
-app.use('/about', about);
+// app.use('/users', users);
+// app.use('/about', about);
 // app.use('/contacts', contacts);
 
 // connect to postgresql
 
 var pg = require('pg');
-var conString = "postgres://michael@localhost/michael";
+var conString = "postgres://bash@localhost/bash";
 
 pg.connect(conString, function(err, client, done) {
 

@@ -45,9 +45,25 @@ angular.module('getContacts', [])
 })
 // ***********************------------------------------
 
+// Details Page Controllers
+.controller('details', ['$scope', '$routeParams', function($scope, $http){
+    $http.get('/calls/:id')
+        .success(function(data) {
 
+        })
+        .error(function(error) {
+            console.log('Error: ' + error);
+        });
+    }])
+
+
+
+// ***********************------------------------------
+
+
+// Charts Controllers
 .controller('callsBar', function($scope, $http){
-    $http.get('/count/calls')
+    $http.get('/count/calls/' + )
         .success(function(data) {
             var xData = []
             var yData = []
@@ -104,7 +120,6 @@ angular.module('getContacts', [])
             var date = data[i].date.split("T")
             var dateSplit = date[0].split('-')
             console.log(dateSplit)
-            // chartData.push(["Date.UTC(" + dateSplit[0] + "," + dateSplit[1] + "," + dateSplit[2] + ")", parseInt(data[i].count)]);
             chartData.push([Date.UTC(dateSplit[0], dateSplit[1]-1, dateSplit[2]), parseInt(data[i].count)])
         }
         console.log("chartData:")

@@ -9,6 +9,7 @@ var conString = "postgres://bash@localhost/bash";
 //   * GET  /count/calls/
 //   * GET  /count/calls/:contact
 //   * GET  /contacts
+//   * GET  /contacts/:id
 //   * GET  /count/contacts
 //   * GET  /count/date
 //   * GET  /callcount
@@ -19,6 +20,10 @@ var conString = "postgres://bash@localhost/bash";
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+
+router.get('/detail/:id', function(req, res, next){
+  res.render('detail')
+})
 
 // Get all calls
 router.get('/calls/:contact', function(req, res, next){
