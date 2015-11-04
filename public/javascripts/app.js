@@ -3,6 +3,7 @@ angular.module('getContacts', [])
 .controller('mainController', function($scope, $http) {
 
     $scope.formData = {};
+    $scope.newContact = {};
     $scope.contacts = {};
 
 // Get all contact Data
@@ -30,14 +31,21 @@ angular.module('getContacts', [])
 // Create a new contact
 
     $scope.addContact = function(req){
-        $http.post('/contacts', $scope.formData)
+        $http.post('/contacts', $scope.newContact)
             .success(function(data) {
-                console.log($scope.formData);
-                $scope.contacts.push({firstname:"hi"});
-                console.log($scope.contacts);
+                
+                var newFirstName = $scope.newContact.firstname
+                
                 $scope.formData = {};
                 $scope.contactData = data;
-                console.log(data);
+                $scope.contacts.push({firstname: newFirstName})
+
+
+                console.log("******")
+                console.log($scope.newContact)
+                console.log($scope.contacts)
+
+                console.log("******")
             })
             .error(function(error) {
                 console.log('Error: ' + error);

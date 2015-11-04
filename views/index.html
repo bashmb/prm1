@@ -42,10 +42,8 @@
 
   <form>
     <div class="form-group">
-      <select class="browser-default col s4" ng-model="formData.callId">
-      <option value="" disabled selected>Choose contact</option>
-      <option ng-repeat="contact in contacts" value={{contact.id}}>{{contact.firstname}}</option>
-    </select>
+      <select class="browser-default col s4" ng-model="formData.callId" ng-options="contact.firstname for contact in contacts">
+
       <input type="date" claass="form-control input-lg" ng-model="formData.callDate">
       <input type="text" class="form-control input-lg" placeholder="Call notes" ng-model="formData.callNotes">
     </div>
@@ -89,17 +87,17 @@
   <form>
     <div class="form-group col s12">
 
-      <input id = 'firstname' type="text" class="form-control input-lg" ng-model="formData.firstname">
+      <input id = 'firstname' type="text" class="form-control input-lg" ng-model="newContact.firstname">
       <label for="firstname">First Name</label>
       
-      <input id = 'lastname' type="text" class="form-control input-lg"  ng-model="formData.lastname">
+      <input id = 'lastname' type="text" class="form-control input-lg"  ng-model="newContact.lastname">
       <label for="lastname">Last Name</label>  
       
       
-      <input id = 'phone' type="text" class="validate"  ng-model="formData.phone">
+      <input id = 'phone' type="text" class="validate"  ng-model="newContact.phone">
       <label for="phone">Phone</label>  
       
-      <input id = 'email' type="text" class="form-control input-lg"  ng-model="formData.email">
+      <input id = 'email' type="text" class="form-control input-lg"  ng-model="newContact.email">
       <label for="email">Email</label>  
     
     </div>
