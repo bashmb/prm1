@@ -30,13 +30,14 @@ angular.module('getContacts', [])
 // Create a new contact
 
     $scope.addContact = function(req){
-        console.log('in add contact');
-        console.log($scope.formData);
         $http.post('/contacts', $scope.formData)
             .success(function(data) {
+                console.log($scope.formData);
+                $scope.contacts.push({firstname:"hi"});
+                console.log($scope.contacts);
                 $scope.formData = {};
                 $scope.contactData = data;
-                // console.log(data);
+                console.log(data);
             })
             .error(function(error) {
                 console.log('Error: ' + error);
@@ -63,7 +64,7 @@ angular.module('getContacts', [])
 
 // Charts Controllers
 .controller('callsBar', function($scope, $http){
-    $http.get('/count/calls/' + )
+    $http.get('/count/calls/' )
         .success(function(data) {
             var xData = []
             var yData = []
