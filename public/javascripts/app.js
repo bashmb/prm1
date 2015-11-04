@@ -15,7 +15,6 @@ angular.module('getContacts', [])
         .error(function(error) {
             console.log('Error: ' + error);
         });
-
 // Log a call
     $scope.addCall = function(req){
         $http.post('/calls', $scope.formData)
