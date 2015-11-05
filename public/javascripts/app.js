@@ -88,7 +88,14 @@ angular.module('getContacts', [])
                 text: 'Recent Calls'
             },
             xAxis: {
-                categories: xData
+                categories: xData,
+                labels:{
+                    formatter: function(){
+
+                        return '<a href="detail/' + this.value + '">' + this.value + '</a>'
+                    },
+                    useHTML: true
+                }
             },
             yAxis: {
                 title: {
