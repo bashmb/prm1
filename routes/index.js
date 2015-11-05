@@ -9,6 +9,7 @@ var conString = "postgres://bash@localhost/bash";
 //   * GET  /count/calls/
 //   * GET  /count/calls/:contact
 //   * GET  /contacts
+//   * GET  /contacts/:id
 //   * GET  /count/contacts
 //   * GET  /count/date
 //   * GET  /callcount
@@ -19,6 +20,10 @@ var conString = "postgres://bash@localhost/bash";
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+
+router.get('/detail/:id', function(req, res, next){
+  res.render('detail')
+})
 
 // Get all calls
 router.get('/calls/:contact', function(req, res, next){
@@ -88,6 +93,31 @@ pg.connect(conString, function(err, client, done) {
 });
 // end of Get Contacts endpoint
 
+
+// Get Contact Info by Contact ID
+router.get('/contacts/:id', function(req, res, next){
+var results = [];
+pg.connect(conString, function(err, client, done) {
+  if (err) {
+    return console.error('error fetching client from pool', err);
+  }
+  var query = client.query('SELECT * FROM contacts WHERE id = $1', [req.params.id]);
+   // Stream results back one row at a time
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(results);
+        });
+    });
+});
+
+// End of contact info by ID
+
+
 // Get Count of Contacts Endpoint
 router.get('/count/contacts', function(req, res, next){
 var results = [];
@@ -119,7 +149,7 @@ pg.connect(conString, function(err, client, done) {
   if (err) {
     return console.error('error fetching client from pool', err);
   }
-  var query = client.query('select contacts.firstname, count(calls.contact)from contacts join calls on contacts.id = calls.contact group by contacts.firstname;');
+  var query = client.query('select contacts.id, contacts.firstname, count(calls.contact)from contacts join calls on contacts.id = calls.contact group by contacts.firstname, contacts.id;');
    // Stream results back one row at a time
         query.on('row', function(row) {
             results.push(row);

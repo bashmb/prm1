@@ -16,11 +16,13 @@
       <ul class="right hide-on-med-and-down">
         <li><a href="#">Login</a></li>
         <li><a href="#">Sign Up</a></li>
+        <li><a href="/about">About</a></li>
       </ul>
 
       <ul id="nav-mobile" class="side-nav">
         <li><a href="#">Login</a></li>
         <li><a href="#">Sign Up</a></li>
+        <li><a href="/about">About</a></li>
       </ul>
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
@@ -32,29 +34,11 @@
       <h1 class="header center orange-text">Call Logger</h1>
       <div class="row center">
         <h5 class="header col s12 light">A personal relationship management app</h5>
+         <!-- Modal Trigger -->
+  <a class="waves-effect waves-light btn modal-trigger" href="#modalAddContact">Add Contact</a>
+  <a class="waves-effect waves-light btn modal-trigger" href="#modalAddCall">Add CAll</a>
+
       </div>
-<!-- End Title Section -->
-
-<!-- New call log form -->
-<div class="container" ng-controller='mainController'>
-
-  <form>
-    <div class="form-group">
-      <select class="browser-default col s4" ng-model="formData.callId">
-      <option value="" disabled selected>Choose contact</option>
-      <option ng-repeat="contact in contacts" value={{contact.id}}>{{contact.firstname}}</option>
-    </select>
-      <input type="date" claass="form-control input-lg" ng-model="formData.callDate">
-      <input type="text" class="form-control input-lg" placeholder="Call notes" ng-model="formData.callNotes">
-    </div>
-    <button type="submit" class="btn btn-primary btn-lg" ng-click="addCall()">Log Call</button>
-  </form>
-</div>
-
-<!-- End of new log form -->
-
-
-
 
 <!-- Chart goes here -->
 
@@ -63,7 +47,7 @@
     <!-- New Contact Section  -->
 
       <!-- <div ng-repeat='n in barData'>{{n.firstname}} - {{n.count}}</div> -->
-      <div id="callBar" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+      <div id="callBar" style="min-width: 310px; height: 200px; margin: 0 auto"></div>
 
     </div>
   </div> 
@@ -73,44 +57,12 @@
     <!-- New Contact Section  -->
 
       <!-- <div ng-repeat='n in barData'>{{n.firstname}} - {{n.count}}</div> -->
-      <div id="dateLineChart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+      <div id="dateLineChart" style="min-width: 310px; height: 200px; margin: 0 auto"></div>
 
     </div>
   </div> 
 <!-- End of chart -->
 
-
-
-    <!-- New call log form -->
-<div class="container" ng-controller='mainController'>
-
-  <form>
-    <div class="form-group col s12">
-
-      <input id = 'firstname' type="text" class="form-control input-lg" ng-model="formData.firstname">
-      <label for="firstname">First Name</label>
-      
-      <input id = 'lastname' type="text" class="form-control input-lg"  ng-model="formData.lastname">
-      <label for="lastname">Last Name</label>  
-      
-      
-      <input id = 'phone' type="text" class="validate"  ng-model="formData.phone">
-      <label for="phone">Phone</label>  
-      
-      <input id = 'email' type="text" class="form-control input-lg"  ng-model="formData.email">
-      <label for="email">Email</label>  
-    
-    </div>
-    <br>
-    <button type="submit" class="btn btn-primary btn-lg" ng-click="addContact()">Add Contact</button>
-  </form>
-
-
-
-</div>
-
-
-<!-- End of new log form -->
 
       
     <br><br>
@@ -149,6 +101,69 @@
     </div>
   </footer>
 
+<!-- Add Contact Modal -->
+<div id="modalAddContact" class="modal">
+    <div class="modal-content">
+      <h4>New Contact</h4>
+<div class="container" ng-controller='mainController'>
+
+  <form>
+    <div class="form-group col s12">
+
+      <input id = 'firstname' type="text" class="form-control input-lg" ng-model="newContact.firstname">
+      <label for="firstname">First Name</label>
+      
+      <input id = 'lastname' type="text" class="form-control input-lg"  ng-model="newContact.lastname">
+      <label for="lastname">Last Name</label>  
+      
+      
+      <input id = 'phone' type="text" class="validate"  ng-model="newContact.phone">
+      <label for="phone">Phone</label>  
+      
+      <input id = 'email' type="text" class="form-control input-lg"  ng-model="newContact.email">
+      <label for="email">Email</label>  
+    
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary btn-lg modal-action modal-close waves-effect" ng-click="addContact()">Add Contact</button>
+  </form>
+
+
+
+  </div>
+    </div>
+
+  </div>
+
+<!-- End of Add Contact Modal -->
+
+
+<!-- New Call Modal -->
+
+<div id="modalAddCall" class="modal">
+    <div class="modal-content">
+      <h4>New Contact</h4>
+<div class="container" ng-controller='mainController'>
+
+  <form>
+    <div class="form-group">
+      <select class="browser-default col s4" ng-model="formData.callId" ng-options="contact.id as contact.firstname for contact in contacts">
+
+      <input type="date" claass="form-control input-lg" ng-model="formData.callDate">
+      <input type="text" class="form-control input-lg" placeholder="Call notes" ng-model="formData.callNotes">
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg modal-action modal-close waves-effect" ng-click="addCall()">Log Call</button>
+  </form>
+</div>
+
+
+
+
+    </div>
+
+
+<!-- End of New Call Modal -->
+
 
   <!--  Scripts-->
     <!-- angular -->
@@ -165,6 +180,14 @@
   <!-- charts -->
   <script src="/javascripts/highcharts.js"></script>
   <script src="/javascripts/myChart.js"></script>
+<!-- Modal -->
+  <script>
+      $(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal-trigger').leanModal();
+  });
+  </script>
+  
 
   </body>
 </html>

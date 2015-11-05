@@ -3,6 +3,7 @@ angular.module('getContacts', [])
 .controller('mainController', function($scope, $http) {
 
     $scope.formData = {};
+    $scope.newContact = {};
     $scope.contacts = {};
 
 // Get all contact Data
@@ -14,7 +15,6 @@ angular.module('getContacts', [])
         .error(function(error) {
             console.log('Error: ' + error);
         });
-
 // Log a call
     $scope.addCall = function(req){
         $http.post('/calls', $scope.formData)
@@ -30,13 +30,20 @@ angular.module('getContacts', [])
 // Create a new contact
 
     $scope.addContact = function(req){
-        console.log('in add contact');
-        console.log($scope.formData);
-        $http.post('/contacts', $scope.formData)
+        $http.post('/contacts', $scope.newContact)
             .success(function(data) {
+                
+                var newFirstName = $scope.newContact.firstname
+                
                 $scope.formData = {};
                 $scope.contactData = data;
-                // console.log(data);
+                $scope.contacts.push({firstname: newFirstName})
+                
+                console.log("******")
+                console.log($scope.newContact)
+                console.log($scope.contacts)
+
+                console.log("******")
             })
             .error(function(error) {
                 console.log('Error: ' + error);
@@ -45,14 +52,30 @@ angular.module('getContacts', [])
 })
 // ***********************------------------------------
 
+// Details Page Controllers
+.controller('details', function($scope, $http){
+    $http.get('/calls/:id')
+        .success(function(data) {
+            $scope.contactDetail = data
+        })
+        .error(function(error) {
+            console.log('Error: ' + error);
+        });
+    })
 
+
+
+// ***********************------------------------------
+
+
+// Charts Controllers
 .controller('callsBar', function($scope, $http){
-    $http.get('/count/calls')
+    $http.get('/count/calls/' )
         .success(function(data) {
             var xData = []
             var yData = []
             for(i = 0; i < data.length; i++){
-                xData.push(data[i].firstname)
+                xData.push([data[i].firstname,data[i].id])
                 yData.push(parseInt(data[i].count))
             }
 
@@ -65,7 +88,16 @@ angular.module('getContacts', [])
                 text: 'Recent Calls'
             },
             xAxis: {
-                categories: xData
+                categories: xData,
+                labels:{
+                    formatter: function(){
+                        console.log("hi'")
+                        console.log(this)
+                        console.log("hi")
+                        return '<a href="detail/' + this.value[1] + '">' + this.value[0] + '</a>'
+                    },
+                    useHTML: true
+                }
             },
             yAxis: {
                 title: {
@@ -104,7 +136,6 @@ angular.module('getContacts', [])
             var date = data[i].date.split("T")
             var dateSplit = date[0].split('-')
             console.log(dateSplit)
-            // chartData.push(["Date.UTC(" + dateSplit[0] + "," + dateSplit[1] + "," + dateSplit[2] + ")", parseInt(data[i].count)]);
             chartData.push([Date.UTC(dateSplit[0], dateSplit[1]-1, dateSplit[2]), parseInt(data[i].count)])
         }
         console.log("chartData:")
