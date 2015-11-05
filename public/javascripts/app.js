@@ -38,8 +38,7 @@ angular.module('getContacts', [])
                 $scope.formData = {};
                 $scope.contactData = data;
                 $scope.contacts.push({firstname: newFirstName})
-
-
+                
                 console.log("******")
                 console.log($scope.newContact)
                 console.log($scope.contacts)
