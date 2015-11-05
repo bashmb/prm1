@@ -53,15 +53,15 @@ angular.module('getContacts', [])
 // ***********************------------------------------
 
 // Details Page Controllers
-.controller('details', ['$scope', '$routeParams', function($scope, $http){
+.controller('details', function($scope, $http){
     $http.get('/calls/:id')
         .success(function(data) {
-
+            $scope.contactDetail = data
         })
         .error(function(error) {
             console.log('Error: ' + error);
         });
-    }])
+    })
 
 
 
@@ -75,7 +75,7 @@ angular.module('getContacts', [])
             var xData = []
             var yData = []
             for(i = 0; i < data.length; i++){
-                xData.push(data[i].firstname)
+                xData.push([data[i].firstname,data[i].id])
                 yData.push(parseInt(data[i].count))
             }
 
@@ -91,8 +91,10 @@ angular.module('getContacts', [])
                 categories: xData,
                 labels:{
                     formatter: function(){
-
-                        return '<a href="detail/' + this.value + '">' + this.value + '</a>'
+                        console.log("hi'")
+                        console.log(this)
+                        console.log("hi")
+                        return '<a href="detail/' + this.value[1] + '">' + this.value[0] + '</a>'
                     },
                     useHTML: true
                 }
